@@ -1,9 +1,14 @@
 import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
 import { Between, ILike, Repository } from "typeorm";
 import { TodoEntity } from "../entities/todo.entity";
 
 @Injectable()
 export class TodoRepository extends Repository<TodoEntity> {
+    constructor(@InjectRepository(TodoEntity) repository: Repository<TodoEntity>) {
+        super(repository.target, repository.manager)
+    }
+
     async getOneById(id: string): Promise<TodoEntity> {
         const entity = await this.findOneBy({
             id
