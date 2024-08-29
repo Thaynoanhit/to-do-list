@@ -1,18 +1,22 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
-    driver: "postgres",
+    type: "postgres",
     database: "todo",
     host: "ep-red-queen-a5q7tbgv.us-east-2.aws.neon.tech",
+    port: 5432,
     username: "todo_owner",
     password: "IsejV2W4SZPv",
     ssl: true,
     synchronize: true,
-    autoLoadEntities: true
+    autoLoadEntities: true,
+    uuidExtension: 'pgcrypto',
+    namingStrategy: new SnakeNamingStrategy(),
   })],
   controllers: [AppController],
   providers: [AppService],
