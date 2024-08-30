@@ -3,9 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { TodoModule } from './modulos/to-do/entities/todo.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
+  imports:[
+  TypeOrmModule.forRoot({
   type: "postgres",
   database: "todo",
   host:"ep-shy-forest-a5nev4ct.us-east-2.aws.neon.tech",
@@ -17,8 +19,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
   autoLoadEntities: true,
   uuidExtension: "pgcrypto",
   namingStrategy: new SnakeNamingStrategy()
-  }
-  )],
+  }), TodoModule],
   controllers: [AppController],
   providers: [AppService],
 })
